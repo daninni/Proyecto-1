@@ -11,7 +11,7 @@ class ProyectoSeeder extends Seeder
     {
         Proyecto::create([ 
             'nombre' => 'Sistema Inventario',
-            'fechaInicio' => '2025-06-01', 
+            'fecha_inicio' => '2025-06-01', 
             'estado' => 'En progreso',
             'responsable' => 'Ana Torres',
             'monto' => 1500000,
@@ -20,7 +20,7 @@ class ProyectoSeeder extends Seeder
 
         Proyecto::create([ 
             'nombre' => 'Rediseño Web',
-            'fechaInicio' => '2025-07-01',
+            'fecha_inicio' => '2025-07-01',
             'estado' => 'Pendiente',
             'responsable' => 'Carlos Ruiz',
             'monto' => 950000,
