@@ -1,34 +1,28 @@
 <?php
 
 use App\Http\Controllers\proyectoController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AuthController; 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-
-// Agregar proyecto
-Route::post('/agregarProyecto', [proyectoController::class, 'agregarProyecto']); 
-// Listar proyectos
-Route::get('/listarProyectos', [proyectoController::class, 'listarProyectos']); 
-// Obtener proyecto por id
-Route::get('/obtenerProyectoId/{id}', [proyectoController::class, 'obtenerProyectoId']); 
-//Actualizar proyecto por id
-Route::put('/actualizarProyectoId/{id}', [proyectoController::class, 'actualizarProyectoId']); 
-//Eliminar proyecto por id
-Route::delete('/eliminarProyectoId/{id}', [proyectoController::class, 'eliminarProyectoId']);
-// Obtener UF del día
-Route::get('/uf-hoy', [proyectoController::class, 'mostrarUf']);
-
-// Registro
-Route::post('/registro', [AuthController::class, 'register']);
-
-//Login
+// rutas publicas sin jwt
+Route::post('/registro', [AuthController::class, 'registro']);
 Route::post('/login', [AuthController::class, 'login']);
 
-//Ruta protegida 
-Route::middleware('jwt.auth')->group(function () {
-    Route::get('/proyectos', [proyectoController::class, 'index']);
+// listar proyectos sin jwt
+Route::get('/listarProyectos', [proyectoController::class, 'listarProyectos']); 
+Route::get('/proyectos', [proyectoController::class, 'index']);
+
+// rutas protegidas con jwt
+Route::middleware(['jwt'])->group(function () {
+    Route::post('/agregarProyecto', [proyectoController::class, 'agregarProyecto']); 
+    Route::get('/obtenerProyectoId/{id}', [proyectoController::class, 'obtenerProyectoId']); 
+    Route::put('/actualizarProyectoId/{id}', [proyectoController::class, 'actualizarProyectoId']); 
+    Route::delete('/eliminarProyectoId/{id}', [proyectoController::class, 'eliminarProyectoId']);
+    Route::get('/uf-hoy', [proyectoController::class, 'mostrarUf']);
+    
+    // usuario autenticado jwt
+    Route::get('/user', function () {
+        return response()->json(['usuario' => auth('api')->user()]);
+    });
 });

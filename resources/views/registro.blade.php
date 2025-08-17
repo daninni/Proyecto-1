@@ -1,4 +1,3 @@
-<!-- resources/views/registro.blade.php -->
 @extends('layouts.app')
 
 @section('title', 'Registro')

@@ -14,3 +14,9 @@ Route::get('/login', function () {
 Route::get('/registro', function () {
     return view('registro');
 });
+
+
+Route::get('/listar', function () {
+    $proyectos = \App\Models\Proyecto::all();
+    return view('proyectos.listar', compact('proyectos'));
+});
