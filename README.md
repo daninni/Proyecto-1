@@ -112,6 +112,9 @@ Ejecuta los tests con:
 php artisan test
 ```
 
+## Uso de I.A.
+Se utilizó ChatGPT para estructurar el informe y generar artefactos auxiliares (plantillas, colecciones y esqueletos de código), citando su uso de forma explícita.
+
 ## Posibles errores al iniciar y correr el proyecto.
 - Caché
 Limpiar caché y luego cargar nuevamente la configuración
