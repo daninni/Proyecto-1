@@ -7,60 +7,118 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+# Proyecto Unidad 2
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Este proyecto es una aplicación Laravel que gestiona proyectos y consulta el valor de la UF del día.
+Contiene registro de usuarios, login y algunos endpoints privados protegidos por un token jwt
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Versiones utilizadas
+```sh
+node: v18
+php: 8.2.28
+Apache: 2.4.54
+Laravel: 11.31
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Creado con composer
+   ```sh
+   composer create-project laravel/laravel %s "^11.0"
+   ```
+## Instalación
 
-## Learning Laravel
+1. Clona el repositorio y entra al directorio del proyecto.
+2. Instala las dependencias:
+   ```sh
+   composer install
+   ```
+3. Copiar el archivo de entorno:
+   ```sh
+   cp .env.example .env
+   ```
+4. Genera la clave de la aplicación:
+   ```sh
+   php artisan key:generate
+   ```
+5. Ejecuta las migraciones:
+   ```sh
+   php artisan migrate
+   ```
+6. Pobla la base de datos con seeders:
+   ```sh
+   php artisan db:seed
+   ```
+7. Inicia el servidor de desarrollo:
+   ```sh
+   php artisan serve
+   ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Endpoints API
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Las rutas API están disponibles bajo el prefijo `/api`. Ejemplo de uso con la URL base `http://proyecto-unidad-1.test`:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Listar proyectos:**  
+  `GET /api/listarProyectos`
 
-## Laravel Sponsors
+- **Agregar proyecto:**  
+  `POST /api/agregarProyecto`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **Obtener proyecto por ID:**  
+  `GET /api/obtenerProyectoId/{id}`
 
-### Premium Partners
+- **Actualizar proyecto por ID:**  
+  `PUT /api/actualizarProyectoId/{id}`
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- **Eliminar proyecto por ID:**  
+  `DELETE /api/eliminarProyectoId/{id}`
 
-## Contributing
+- **Obtener UF del día:**  
+  `GET /api/uf-hoy`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **Obtener UF del día:**  
+  `POST /api/login`
 
-## Code of Conduct
+- **Obtener UF del día:**  
+  `POST /api/registro`
+  
+## Ejemplo de petición
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```sh
+curl http://proyecto-unidad-1.test/api/listarProyectos
+```
 
-## Security Vulnerabilities
+```sh
+curl --location 'http://proyecto-unidad-1.test/api/login' \
+--header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzU1NDY1MjM4LCJleHAiOjE3NTU0Njg4MzgsIm5iZiI6MTc1NTQ2NTIzOCwianRpIjoieDJLSzE1SHZRcm9IUERmYSIsInN1YiI6IjEiLCJwcnYiOiI1ODcwODYzZDRhNjJkNzkxNDQzZmFmOTM2ZmMzNjgwMzFkMTEwYzRmIn0.SJhPRq_q2lr5FYgY94T7Go_hf5YAWR7Pe2d7XL0MePk' \
+--header 'Content-Type: application/json' \
+--header 'Cookie: XSRF-TOKEN=eyJpdiI6Iko0SGU1YnhWOGdWV3F1SWhjaWl4a0E9PSIsInZhbHVlIjoiK0h3ZEhEemdxdlRNQ0pWbDdOUDIrREszTWpJTUFEK1ptdkNmVnU2ejc4bTJBOU9mTGRKYVhGem5SVVN6QzVINjM2ZzdkMmV4c2UvMjNSQ2VvaDMrcFpWcHRmenRFQW9rYUZjT1ljUnhYajlKKzY0UDBKZXFIL0FUOVFabUZ3bE4iLCJtYWMiOiIwOTdkODJiNGM2NDNhNDBlMmYwMjU0MDU1MTI1Y2M0MzYzZDdkMDJiNDFhNDYxODM3NjI1MjRlZTI1NDgxY2VjIiwidGFnIjoiIn0%3D; laravel_session=eyJpdiI6Ik9DeE1iRUtRZjVlS0lPWjh5UVl1VUE9PSIsInZhbHVlIjoiSE9aN2c2STIvN241NGJpZ3ZiNnJLUU0zamlUbm0rbG5rMHIzRXJlWjhzSXU1R2MwMktlNjkxWVZWbmRaNGZuckZDc000SFYyd2pNdHhlUE5QMkliMTk1ZWtDMS81NVJoMjV2V0IwQ0dXejJTZU1qdVIwVk5KMTNFN0tDeWhsc1YiLCJtYWMiOiJiYTFlODVmMmU2NWQ3NWE0YTNmMzQ3NWU3M2JiNWU2NDE1MjhhZDQzNDRmMzc0OTM2ZmUxZTRmMzM5ODJlZGJkIiwidGFnIjoiIn0%3D' \
+--data-raw '{
+    "correo": "ana@123.com",
+    "clave": "ana123"
+}'
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Estructura principal
 
-## License
+- Controlador principal: [`App\Http\Controllers\proyectoController`](proyecto1/proyecto1/app/Http/Controllers/proyectoController.php)
+- Modelo de proyectos: [`App\Models\Proyecto`](proyecto1/proyecto1/app/Models/Proyecto.php)
+- Modelo de usuario: ['App\Models\Usuario'](../Proyecto-1/app/Models/Usuario.php)
+- Servicio UF: [`App\Services\UfService`](proyecto1/proyecto1/app/Services/UfService.php)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Tests
+
+Ejecuta los tests con:
+
+```sh
+php artisan test
+```
+
+## Posibles errores al iniciar y correr el proyecto.
+- Caché
+Limpiar caché y luego cargar nuevamente la configuración
+
+```sh
+php artisan config:clear
+php artisan cache:clear
+php artisan config:cache
+```
+
