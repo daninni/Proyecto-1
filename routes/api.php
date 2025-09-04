@@ -4,6 +4,7 @@ use App\Http\Controllers\proyectoController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\ProyectoApiController;
 
 // rutas publicas sin jwt
 Route::post('/registro', [AuthController::class, 'registro']);
@@ -15,10 +16,7 @@ Route::get('/proyectos', [proyectoController::class, 'index']);
 
 // rutas protegidas con jwt
 Route::middleware(['jwt'])->group(function () {
-    Route::post('/agregarProyecto', [proyectoController::class, 'agregarProyecto']); 
-    Route::get('/obtenerProyectoId/{id}', [proyectoController::class, 'obtenerProyectoId']); 
-    Route::put('/actualizarProyectoId/{id}', [proyectoController::class, 'actualizarProyectoId']); 
-    Route::delete('/eliminarProyectoId/{id}', [proyectoController::class, 'eliminarProyectoId']);
+    Route::apiResource('proyectos', \App\Http\Controllers\Api\ProyectoApiController::class);
     Route::get('/uf-hoy', [proyectoController::class, 'mostrarUf']);
     
     // usuario autenticado jwt
